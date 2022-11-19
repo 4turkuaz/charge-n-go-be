@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -31,10 +31,7 @@ class UserDetails(APIView):
     """
 
     def _get_user(self, pk):
-        try:
-            return UserEntity.objects.get(pk=pk)
-        except UserEntity.DoesNotExist:
-            raise Http404
+        return get_object_or_404(UserEntity, pk=pk)
 
     def get(self, request, pk):
         user = self._get_user(pk=pk)

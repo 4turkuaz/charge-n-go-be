@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,3 +19,13 @@ class ChargingUnits(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChargingUnitsByUser(APIView):
+    def _get_user(self, pk):
+        return get_object_or_404(ChargingUnitEntity, pk=pk)
+
+    def get(self, request, pk):
+        all_charging_units = ChargingUnitEntity.objects.filter(user_id=pk)
+        serializer = ChargingUnitSerializer(all_charging_units, many=True)
+        return Response(serializer.data)
