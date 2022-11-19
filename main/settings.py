@@ -52,6 +52,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://charge-n-go-be.herokuapp.com/"
+]
+
 ROOT_URLCONF = "main.urls"
 
 TEMPLATES = [
