@@ -21,6 +21,9 @@ class ChargingUnitEntity(models.Model):
     address = models.TextField(max_length=128)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     lng = models.DecimalField(max_digits=9, decimal_places=6)
+    occupied_slots = models.IntegerField(null=False, default=0)
+    max_slots = models.IntegerField(null=False)
+
 
     @property
     def get_location(self) -> Location:

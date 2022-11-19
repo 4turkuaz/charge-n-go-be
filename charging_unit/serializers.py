@@ -12,6 +12,8 @@ class ChargingUnitSerializer(serializers.ModelSerializer):
     address = models.TextField(max_length=128, null=False)
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=False)
     lng = models.DecimalField(max_digits=9, decimal_places=6, null=False)
+    occupied_slots = models.IntegerField(null=False)
+    max_slots = models.IntegerField(null=False)
 
     class Meta:
         model = ChargingUnitEntity
