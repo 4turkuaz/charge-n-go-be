@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
@@ -28,4 +29,11 @@ class ChargingUnitsByUser(APIView):
     def get(self, request, pk):
         all_charging_units = ChargingUnitEntity.objects.filter(user_id=pk)
         serializer = ChargingUnitSerializer(all_charging_units, many=True)
+        return Response(serializer.data)
+
+
+class AvailableChargingUnits(APIView):
+    def get(self, request):
+        all_available_charging_units = ChargingUnitEntity.objects.filter(max_slots__gt=F('occupied_slots'))
+        serializer = ChargingUnitSerializer(all_available_charging_units, many=True)
         return Response(serializer.data)

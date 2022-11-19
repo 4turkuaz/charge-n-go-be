@@ -24,7 +24,6 @@ class ChargingUnitEntity(models.Model):
     occupied_slots = models.IntegerField(null=False, default=0)
     max_slots = models.IntegerField(null=False)
 
-
     @property
     def get_location(self) -> Location:
         return Location(self.lat, self.lng)

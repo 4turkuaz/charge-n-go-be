@@ -2,6 +2,6 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import ChargingHistory
+from .models import Transaction
 
-admin.site.register(ChargingHistory)
+admin.site.register(Transaction)

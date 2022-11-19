@@ -7,7 +7,7 @@ from charging_unit.models import ChargingUnitEntity
 from user.models import UserEntity
 
 
-class ChargingHistory(models.Model):
+class Transaction(models.Model):
     transaction_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
