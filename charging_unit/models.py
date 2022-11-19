@@ -30,3 +30,12 @@ class ChargingUnitEntity(models.Model):
 
     class Meta:
         db_table = "charging_unit"
+
+
+class Reservation(models.Model):
+    charging_unit_id = models.AutoField(primary_key=True, editable=False)
+    user_id = models.ForeignKey(UserEntity, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(auto_now_add=True)
