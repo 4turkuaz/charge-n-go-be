@@ -4,7 +4,7 @@ from rest_framework import serializers
 from charging_unit.models import ChargingUnitEntity
 
 
-class ChargingUnitSerializer(serializers.ModelSerializer):
+class ChargingUnitWriteSerializer(serializers.ModelSerializer):
     charging_unit_id = serializers.IntegerField(required=False)
     description = models.TextField(max_length=255, null=False)
     brand = models.TextField(max_length=32, null=False)
@@ -15,4 +15,10 @@ class ChargingUnitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChargingUnitEntity
-        fields = "__all__"
+        exclude = ("location",)
+
+
+class ChargingUnitReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChargingUnitEntity
+        fields = '__all__'

@@ -5,17 +5,17 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import ChargingUnitEntity
-from .serializers import ChargingUnitSerializer
+from .serializers import ChargingUnitWriteSerializer, ChargingUnitReadSerializer
 
 
 class ChargingUnits(APIView):
     def get(self, request):
         all_charging_units = ChargingUnitEntity.objects.all()
-        serializer = ChargingUnitSerializer(all_charging_units, many=True)
+        serializer = ChargingUnitReadSerializer(all_charging_units, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ChargingUnitSerializer(data=request.data)
+        serializer = ChargingUnitWriteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -28,12 +28,12 @@ class ChargingUnitsByUser(APIView):
 
     def get(self, request, pk):
         all_charging_units = ChargingUnitEntity.objects.filter(user_id=pk)
-        serializer = ChargingUnitSerializer(all_charging_units, many=True)
+        serializer = ChargingUnitReadSerializer(all_charging_units, many=True)
         return Response(serializer.data)
 
 
 class AvailableChargingUnits(APIView):
     def get(self, request):
         all_available_charging_units = ChargingUnitEntity.objects.filter(max_slots__gt=F('occupied_slots'))
-        serializer = ChargingUnitSerializer(all_available_charging_units, many=True)
+        serializer = ChargingUnitReadSerializer(all_available_charging_units, many=True)
         return Response(serializer.data)

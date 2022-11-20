@@ -1,8 +1,4 @@
-import json
-
 from django.db import models
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 
 from charging_unit.src.utils import get_lat_lng_from_address
 from user.models import UserEntity
@@ -25,16 +21,16 @@ class ChargingUnitEntity(models.Model):
     address = models.TextField(max_length=128)
     occupied_slots = models.IntegerField(null=False, default=0)
     max_slots = models.IntegerField(null=False)
+    location = models.CharField(max_length=128, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.location = get_lat_lng_from_address(self.address)
+        print(f'self.location: {self.location}')
+        super(ChargingUnitEntity, self).save(*args, **kwargs)
 
     class Meta:
         db_table = "charging_unit"
 
-
-# method for updating
-@receiver(post_save, sender=ChargingUnitEntity, dispatch_uid="charging_unit_id")
-def update_location(sender, instance, **kwargs):
-    location_dict = json.dumps(get_lat_lng_from_address(instance.address).to_json())
-    instance.location = location_dict
 
 
 class Reservation(models.Model):
