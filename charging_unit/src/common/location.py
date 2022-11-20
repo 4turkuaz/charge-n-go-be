@@ -4,4 +4,10 @@ class Location:
         self.lng = lng
 
     def __str__(self):
-        return f"({'{:.4f}'.format(self.lat)}, {'{:.4f}'.format(self.lng)})"
+        return str(self.to_json())
+
+    def to_json(self):
+        return {
+            "lat": self.lat,
+            "lng": self.lng
+        }
