@@ -10,8 +10,6 @@ class ChargingUnitSerializer(serializers.ModelSerializer):
     brand = models.TextField(max_length=32, null=False)
     model = models.TextField(max_length=32, null=False)
     address = models.TextField(max_length=128, null=False)
-    lat = models.DecimalField(max_digits=9, decimal_places=6, null=False)
-    lng = models.DecimalField(max_digits=9, decimal_places=6, null=False)
     occupied_slots = models.IntegerField(null=False)
     max_slots = models.IntegerField(null=False)
 

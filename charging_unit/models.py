@@ -2,6 +2,7 @@ from django.db import models
 from user.models import UserEntity
 
 from .src.common.location import Location
+from .src.utils import get_lat_lng_from_address
 
 
 class ChargingUnitEntity(models.Model):
@@ -19,14 +20,12 @@ class ChargingUnitEntity(models.Model):
     brand = models.TextField(max_length=32, null=False, default="")
     model = models.TextField(max_length=32, null=False, default="")
     address = models.TextField(max_length=128)
-    lat = models.DecimalField(max_digits=9, decimal_places=6)
-    lng = models.DecimalField(max_digits=9, decimal_places=6)
     occupied_slots = models.IntegerField(null=False, default=0)
     max_slots = models.IntegerField(null=False)
 
     @property
-    def get_location(self) -> Location:
-        return Location(self.lat, self.lng)
+    def location(self) -> Location:
+        return get_lat_lng_from_address(self.address)
 
     class Meta:
         db_table = "charging_unit"

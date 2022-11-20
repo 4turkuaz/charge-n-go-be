@@ -12,3 +12,4 @@ tomli==2.0.1
 typing-extensions==4.4.0
 psycopg2-binary
 django_heroku
+requests
