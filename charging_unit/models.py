@@ -25,7 +25,6 @@ class ChargingUnitEntity(models.Model):
     address = models.TextField(max_length=128)
     occupied_slots = models.IntegerField(null=False, default=0)
     max_slots = models.IntegerField(null=False)
-    location = models.TextField(blank=True, null=True, default={})
 
     class Meta:
         db_table = "charging_unit"
@@ -36,7 +35,6 @@ class ChargingUnitEntity(models.Model):
 def update_location(sender, instance, **kwargs):
     location_dict = json.dumps(get_lat_lng_from_address(instance.address).to_json())
     instance.location = location_dict
-    instance.save()
 
 
 class Reservation(models.Model):
